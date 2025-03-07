@@ -1,0 +1,12 @@
+{
+  "name": "misskey-tools",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A set of scripts to maintain misskey.niri.la",
+  "scripts": {},
+  "author": "anatawa12",
+  "license": "MIT",
+  "dependencies": {
+    "ts-node": "^10.9.2"
+  }
+}
