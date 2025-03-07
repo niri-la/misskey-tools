@@ -90,7 +90,7 @@ if (notificationTimeline) {
     const values = await sourceRedis.xrange(key, '-', '+');
     console.log('Copying', key, values.length, 'items', values);
     if (destRedis) {
-      const count = await destRedis.xlen(key);
+      const count = await destRedis.xlen(keyPrefix + key);
       if (count != 0) {
         console.log('Destination timeline is not empty:', key);
         return;
