@@ -76,7 +76,7 @@ if (fttTimelines.length != 0) {
 
   await Promise.all(fttTimelineKeys.map(async key => {
     const values = await sourceRedis.lrange(key, 0, -1);
-    console.log('Copying', key, values.length, 'items', values);
+    console.log('Copying', key, values.length, 'items');
     if (!dryRun) {
       await destRedis.rpush(keyPrefix + key, ...values);
     }
@@ -88,7 +88,7 @@ if (notificationTimeline) {
   console.log('notification timelines:', keys);
   await Promise.all(keys.map(async key => {
     const values = await sourceRedis.xrange(key, '-', '+');
-    console.log('Copying', key, values.length, 'items', values);
+    console.log('Copying', key, values.length, 'items');
     if (destRedis) {
       const count = await destRedis.xlen(keyPrefix + key);
       if (count != 0) {
