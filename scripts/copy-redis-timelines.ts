@@ -78,7 +78,7 @@ if (fttTimelines.length != 0) {
     const values = await sourceRedis.lrange(key, 0, -1);
     console.log('Copying', key, values.length, 'items');
     if (!dryRun) {
-      await destRedis.rpush(keyPrefix + key, ...values);
+      await destRedis.rpush(key, ...values);
     }
   }));
 }
@@ -90,7 +90,7 @@ if (notificationTimeline) {
     const values = await sourceRedis.xrange(key, '-', '+');
     console.log('Copying', key, values.length, 'items');
     if (destRedis) {
-      const count = await destRedis.xlen(keyPrefix + key);
+      const count = await destRedis.xlen(key);
       if (count != 0) {
         console.log('Destination timeline is not empty:', key);
         return;
@@ -100,7 +100,7 @@ if (notificationTimeline) {
         // if the destination timeline is empty, copy the timeline
         // if not empty, we may experience error on xadd so do not
         for (const [id, fields] of values) {
-          await destRedis.xadd(keyPrefix + key, id, ...fields);
+          await destRedis.xadd(key, id, ...fields);
         }
       }
     }
